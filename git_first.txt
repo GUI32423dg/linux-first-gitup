@@ -1,3 +1,7 @@
+在虚拟机第一次下载git使用时需要修改git的配置文件
+#git config --global user.name "***"(此处填写gitup帐号)
+#git congig --global user.email ***     (此处填写注册git帐号时所用的邮箱)
+
 
 第一次连接gitup上传的步骤
 1.先在git网站中创建一个库
