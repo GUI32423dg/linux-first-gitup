@@ -32,6 +32,23 @@ cat /etc/resolv.conf  //查看DNS网址
 一个网卡多个IP的配置方法看视频！
 
 
+查看网卡的状态和速率
+#ethool 网卡名称
+
+查看TCP端口
+1. #ss -antp
+2. #netstat -antp
+
+查看UDP端口
+1. #ss -anup
+2. #netstat -anup
+
+查看所有端口号
+
+ss -antup
+
+
+
 
 
 
