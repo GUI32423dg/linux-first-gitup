@@ -1,0 +1,46 @@
+/etc/sysconfig/network-scripts/
+网卡配置文件的配置
+
+DEVICE=网卡名称
+NAME=网卡配置文件名称
+ONBOOT=yes       //设置开机自动启动网卡
+BOOTPROTO=none   //手动指定IP
+IPADDR=192.168.122.105
+NETMASK=255.255.255.0     或   PREFIX=24   //子网掩码
+GATEWAY=192.168.122.1     //网关（如果有的话）
+DNS1=114.114.114.114    //DNS解析服务器
+DNS2=202.106.0.20  
+
+
+关闭NetworkManager服务
+systemctl stop NetworkManager      //停止
+systemctl status NetworkManager    //查看
+systemctl restart NetworkManager    //重启
+systemctl restart Network
+
+
+ifconfig     //查看ip
+route -n      // 查看网关
+cat /etc/resolv.conf  //查看DNS网址
+
+临时禁用网卡
+#ifdown 网卡名称
+启用网卡
+#ifup  网卡名称
+
+
+一个网卡多个IP的配置方法看视频！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
