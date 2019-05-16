@@ -1,0 +1,20 @@
+Linux运行模式
+    0   关机模式
+    1   单用户模式（重置root用户密码）
+    2   无网络的字符模式
+    3   完全字符模式
+    4   预留
+    5   图形模式
+    6   重启模式
+    
+    模式间的切换：
+    #init 0~6      //可以切换成任意模式
+
+
+
+
+CentOS7 
+    模式切换
+    #systemctl isolate multi-user.target   //切换成完全字符模式
+    #systemctl isolate graphical.target    //切换成图形模式
+    
