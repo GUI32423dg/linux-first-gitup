@@ -1,3 +1,9 @@
+
+操作关于网络服务，或者端口，安装软件。自动化运维工具的时候最好输入两条命令
+#setenforce 0   //关闭selinux
+#systemctl stop firework  //关闭防火墙
+
+
 /etc/sysconfig/network-scripts/
 网卡配置文件的配置
 
