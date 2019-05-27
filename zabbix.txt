@@ -1,0 +1,57 @@
+一般企业中必须需要监控的东西：
+mysql
+1.进程状态、数据目录大小、二进制日志目录大小
+zabbix 里有专门的查看方法
+
+
+2.mysql连接数
+
+获取方法：
+    1）登录mysql
+    2）show processlist;
+    3）通过mysql -uroot -e "show processlist"  显示在终端上调用
+
+3.mysql数据库当前运行状态
+Uptime      数据库的运行时间
+Threads      线程数
+Slow queries 慢查询数量：
+
+mysql>show global variables like "%long%";
+long_query_time        10.000000     //表示查询时间超过10秒的列为慢查询语句
+
+mysql>show global variables like "%slow%";
+slow_query_log    OFF    //表示数据库是否要启用慢查询日志    ON 表示开启
+slow_query_log_file      //指定日志存放的日志名
+
+更改的方法：
+#vim /etc/my.cnf
+long_query_time=3          //表示成为慢查询的查询时间更改为3秒
+slow_query_log=on           //开启记录慢查询日志功能
+slow_query_log_file=/var/lib/mysql/slow.log    //指定日志存放的路径
+
+
+Queries per second avg   查询一条数据所需要的平均秒数
+
+4.扩展状态、所有变量的值
+#mysqladmin -uroot -p"****" extended-status
+Com_commit          //  每秒提交事务的次数
+Com_rollback       // 每秒回滚事务的次数
+Com_delete          // 每秒执行delete的次数 
+Com_insert         
+Com_select          
+Com_update
+Slow_queries            //慢查询次数
+max_connections     //最大连接数 
+Queries             // 每秒执行的所有查询数
+
+
+5.主从复制
+# mysql -uroot -p123456 "show slave status"
+IO thread
+SQL thread
+延迟时间    Seconds_Behind_Master:0    //从服务器连接主服务器的连接时间
+
+
+
+
+
