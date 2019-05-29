@@ -1,0 +1,198 @@
+官方：https://python-gitlab.readthedocs.io/en/stable/install.html
+
+>>> pip install python-gitlab 
+
+
+一、获取项目信息
+
+import gitlab
+import json
+
+url = "http://192.168.183.128"
+token = "byiyyC4J2mxp7QEjEosx"
+
+'''
+	在gitlab web界面中获取用户的priavte token
+	User ---  Settings ---- Account  ---- private token  
+'''
+gl = gitlab.Gitlab(url=url, private_token=token)
+
+
+'''
+	创建项目
+'''
+project = gl.projects.create({'name': 'project03'})
+
+
+
+
+'''
+	获取所有项目对象
+'''
+projects = gl.projects.list()
+print(projects)
+
+'''
+	输出项目名称、ID、仓库地址
+	获取仓库地址后，可通过subprocess模块的call()方法执行命令，拉取项目
+'''
+for project in projects:
+	print(project.name)
+	print(project.id)
+	print(project.http_url_to_repo)
+
+	
+	
+
+'''
+	根据项目ID获取单个项目对象
+'''
+p1  = gl.projects.get(1)
+print(p1)
+print(type(p1))
+
+
+
+示例：自动拉取项目文件
+
+import gitlab
+import subprocess
+import os
+
+# 连接gitlab
+
+gitlab_url = "http://10.100.100.252"
+user_private_token = "meQFPfacjzTi6Pbr9JMf"
+
+# 输出所有项目名称、项目ID
+
+def show_all_project():
+    g1 = gitlab.Gitlab(gitlab_url, private_token=user_private_token)
+    all_project = g1.projects.list()
+
+    print("当前gitlab项目列表如下：")
+    for project in all_project:
+        print("项目名称：%s, 项目ID：%s" % (project.name, project.id))
+
+
+# 返回指定项目的下载地址
+
+def get_repo_url(project_id):
+
+    g1 = gitlab.Gitlab(gitlab_url, private_token=user_private_token)
+    project = g1.projects.get(project_id)
+    return project.http_url_to_repo
+
+
+if __name__ == '__main__':
+
+    show_all_project()
+
+    project_id = int(input("项目ID>>>>   "))
+    project_url = get_repo_url(project_id)
+
+    os.chdir("e:/apiProject/data")
+    subprocess.call("git clone %s" % project_url, shell=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+二、 获取指定项目信息
+
+import gitlab
+import json
+
+url = "http://192.168.183.128"
+token = "byiyyC4J2mxp7QEjEosx"
+
+
+gl = gitlab.Gitlab(url=url, private_token=token)
+
+'''
+    获取ID为1的项目
+'''
+p1 = gl.projects.get(1)
+print(p1)
+print("---" * 10)
+
+'''
+    获取该项目下的所有分支 
+'''
+branchs = p1.branches.list()
+print(branchs)
+print("---" * 10)
+
+
+
+'''
+    获取对应分支的属性信息
+'''
+branch_obj = p1.branches.get("master")
+print(branch_obj)
+print(branch_obj.name)
+print(branch_obj.commit.get("id"))
+print("---" * 10)
+
+
+
+'''
+    创建分支
+'''
+
+new_branch = p1.branches.create({"branch":"feature1", "ref":"master"})
+
+
+'''
+    删除分支
+'''
+
+p1.branches.delete('feature1')
+
+
+'''
+    获取项目所有提交信息
+'''
+
+commits = p1.commits.list()
+print(commits)
+print("---" * 10)
+
+for commit_obj  in commits:
+    print(commit_obj.id)
+    print(commit_obj.author_name)
+    print(commit_obj.author_email)
+
+
+'''
+    获取某个提交
+'''
+
+some_commit = p1.commits.get("c9f507d9837d6e9af7696d64cae4053e9be8eee8")
+print(some_commit)
+
+
+'''
+    获取项目所有合并信息
+'''
+
+merges = p1.mergerequests.list()
+print(merges)
+
