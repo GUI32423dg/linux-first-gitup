@@ -1,3 +1,4 @@
+######################
 Django的基本学习
 Django安装
 #yum list |grep pip
